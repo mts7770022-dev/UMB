@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UMB - Uzbek Mughal Burger & Coffee</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #9E0B0F;
+      --primary-dark: #7A0004;
+      --accent: #E8A710;
+      --bg-body: #F9F8F6;
+      --card-bg: #FFFFFF;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --border-color: #EFEBE4;
+      --radius: 12px;
+      --shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      padding-bottom: 90px;
+    }
+
+    /* Top Notice Bar */
+    .top-bar {
+      background: var(--primary);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      padding: 6px 12px;
+      letter-spacing: 0.3px;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #FFFFFF;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-badge {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #FFF;
+      box-shadow: 0 3px 8px rgba(158, 11, 15, 0.3);
+    }
+
+    .logo-badge .crown {
+      font-size: 10px;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .logo-badge .text {
+      font-weight: 800;
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .brand-title h1 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.1;
+    }
+
+    .brand-title p {
+      font-size: 9px;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .cart-btn {
+      position: relative;
+      background: #F4F1EA;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--primary);
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      background: var(--primary);
+      color: #FFF;
+      font-size: 10px;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #FFF;
+    }
+
+    /* Container */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 12px;
+    }
+
+    /* Sliding Banner */
+    .banner-slider {
+      position: relative;
+      width: 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+      background: #000;
+    }
+
+    .slider-track {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      position: relative;
+    }
+
+    .slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      max-height: 280px;
+      background: #111;
+    }
+
+    .slide-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+      padding: 12px;
+      color: #FFF;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .slide-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #FFF;
+    }
+
+    .slide-price {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--accent);
+      background: rgba(0,0,0,0.6);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      transition: all 0.3s;
+    }
+
+    .dot.active {
+      background: var(--accent);
+      width: 16px;
+      border-radius: 10px;
+    }
+
+    /* Category Nav Filter */
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .categories-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      scrollbar-width: none;
+    }
+    .categories-scroll::-webkit-scrollbar { display: none; }
+
+    .cat-btn {
+      white-space: nowrap;
+      padding: 7px 14px;
+      border-radius: 20px;
+      background: #EFECE6;
+      border: none;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cat-btn.active {
+      background: var(--primary);
+      color: #FFF;
+      box-shadow: 0 2px 8px rgba(158, 11, 15, 0.25);
+    }
+
+    /* STRICT 2 CARDS PER ROW GRID */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      background: var(--primary);
+      color: #FFF;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      z-index: 2;
+    }
+
+    .img-container {
+      width: 100%;
+      height: 125px;
+      background: #FAF8F5;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.2;
+      margin-bottom: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-desc {
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.3;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-footer {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .price-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .old-price {
+      font-size: 9px;
+      color: #999;
+      text-decoration: line-through;
+      line-height: 1;
+    }
+
+    .new-price {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.1;
+    }
+
+    .add-btn {
+      background: var(--primary);
+      color: #FFF;
+      border: none;
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* Modal for Details */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-card {
+      background: #FFF;
+      border-radius: 16px;
+      max-width: 400px;
+      width: 100%;
+      overflow: hidden;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .modal-content {
+      padding: 16px;
+      overflow-y: auto;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .modal-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    .modal-actions {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Cart Drawer */
+    .cart-drawer {
+      position: fixed;
+      top: 0; right: -100%;
+      width: 100%;
+      max-width: 380px;
+      height: 100%;
+      background: #FFF;
+      z-index: 2000;
+      box-shadow: -5px 0 25px rgba(0,0,0,0.2);
+      transition: right 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-drawer.open {
+      right: 0;
+    }
+
+    .cart-header {
+      padding: 14px;
+      background: var(--primary);
+      color: #FFF;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-items {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .cart-item-title {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .cart-item-price {
+      font-size: 11px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .qty-ctrl {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .qty-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      border: 1px solid #DDD;
+      background: #FFF;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .cart-footer {
+      padding: 14px;
+      background: #FAF8F5;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .checkout-btn {
+      width: 100%;
+      background: #25D366;
+      color: #FFF;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* Footer */
+    footer {
+      background: #181818;
+      color: #DDD;
+      padding: 24px 14px 80px 14px;
+      font-size: 11px;
+      border-top: 3px solid var(--primary);
+    }
+
+    .footer-title {
+      color: #FFF;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .footer-info-item {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      line-height: 1.4;
+    }
+
+    .agency-credit {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid #333;
+      text-align: center;
+      color: #888;
+      font-size: 10px;
+    }
+
+    .agency-credit span {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Fixed Floating WhatsApp Button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      background: #25D366;
+      color: #FFF;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 900;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    ⚡ FASTEST DELIVERY IN TOWN (1 TO 1.5 HOURS) — ONLY IN LAHORE!
+  </div>
+
+  <header>
+    <div class="brand">
+      <div class="logo-badge">
+        <span class="crown">👑</span>
+        <span class="text">UMB</span>
+      </div>
+      <div class="brand-title">
+        <h1>UMB Burger</h1>
+        <p>UZBEK MUGHAL BURGER & COFFEE</p>
+      </div>
+    </div>
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒
+      <span class="cart-badge" id="cartCount">0</span>
+    </button>
+  </header>
+
+  <div class="container">
+    
+    <!-- Sliding Banner -->
+    <div class="banner-slider">
+      <div class="slider-track" id="sliderTrack">
+        <!-- Slide 1 -->
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80" alt="Pizza Deal">
+          <div class="slide-overlay">
+            <div>
+              <div class="slide-title">Super Saver Deal 🍕</div>
+              <p style="font-size: 10px; opacity: 0.9;">1 Large Pizza + 1L Drink</p>
+            </div>
+            <div class="slide-price">Rs. 1,450</div>
+          </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" alt="Family Deal">
+          <div class="slide-overlay">
+            <div>
+              <div class="slide-title">UMB Family Deal 🍔</div>
+              <p style="font-size: 10px; opacity: 0.9;">1 Large Pizza + 3 Zingers + Sandwich + Shawarma + Wings + 3L Drink</p>
+            </div>
+            <div class="slide-price">Rs. 3,599</div>
+          </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=80" alt="Uzbek Malai Cake">
+          <div class="slide-overlay">
+            <div>
+              <div class="slide-title">Signature Uzbek Malai Cake 🍰</div>
+              <p style="font-size: 10px; opacity: 0.9;">Fresh, Creamy & Rich Taste</p>
+            </div>
+            <div class="slide-price">Rs. 380</div>
+          </div>
+        </div>
+      </div>
+      <div class="slider-dots" id="sliderDots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <!-- Category Filter -->
+    <div class="section-title">
+      <span>Explore Menu</span>
+      <span style="font-size: 10px; color: var(--text-muted);">2 Items / Row</span>
+    </div>
+
+    <div class="categories-scroll">
+      <button class="cat-btn active" onclick="filterCat('all', this)">All Items</button>
+      <button class="cat-btn" onclick="filterCat('deals', this)">🔥 Flyer Deals</button>
+      <button class="cat-btn" onclick="filterCat('cake', this)">🍰 Malai Cake</button>
+      <button class="cat-btn" onclick="filterCat('burgers', this)">🍔 Burgers</button>
+      <button class="cat-btn" onclick="filterCat('pizza', this)">🍕 Pizzas</button>
+      <button class="cat-btn" onclick="filterCat('shawarma', this)">🌯 Shawarma</button>
+      <button class="cat-btn" onclick="filterCat('coffee', this)">☕ Coffee & Drinks</button>
+    </div>
+
+    <!-- 2 Cards Per Row Product Grid -->
+    <div class="product-grid" id="productGrid">
+      <!-- Dynamic rendering via Javascript -->
+    </div>
+
+  </div>
+
+  <!-- Product Detail Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <img id="mImg" class="modal-img" src="" alt="Product">
+      <div class="modal-content">
+        <div id="mTitle" class="modal-title"></div>
+        <div id="mDesc" class="modal-desc"></div>
+        <div style="font-size: 16px; font-weight: 800; color: var(--primary);" id="mPrice"></div>
+      </div>
+      <div class="modal-actions">
+        <button style="background: #EEE; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 600;" onclick="closeModalForce()">Close</button>
+        <button id="mAddBtn" class="add-btn" style="padding: 10px 18px; font-size: 12px;">Add To Cart 🛒</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <span style="font-weight: 700;">Your Order Cart</span>
+      <button style="background:none; border:none; color:#FFF; font-size:18px; cursor:pointer;" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <!-- Items -->
+    </div>
+    <div class="cart-footer">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 700; font-size: 14px;">
+        <span>Total Amount:</span>
+        <span id="cartTotal" style="color: var(--primary);">Rs. 0</span>
+      </div>
+      <button class="checkout-btn" onclick="sendWhatsAppOrder()">
+        <span>Order via WhatsApp</span> 📲
+      </button>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/923033944436?text=Hi%20UMB!%20I%20want%20to%20place%20an%20order." target="_blank" class="whatsapp-float">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="#FFF"/></svg>
+  </a>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-title">UMB - Uzbek Mughal Burger</div>
+    <div class="footer-info-item">
+      📍 <span><b>Address:</b> Near Gajjumatta Metro Terminal / Kahna Nau, Main Ferozepur Road, Lahore, Punjab, Pakistan.</span>
+    </div>
+    <div class="footer-info-item">
+      📞 <span><b>Phone / WhatsApp:</b> 03033944436</span>
+    </div>
+    <div class="footer-info-item">
+      ⏰ <span><b>Operating Hours:</b> 1:00 PM – 3:00 AM (Daily)</span>
+    </div>
+    <div class="footer-info-item">
+      🚀 <span><b>Delivery Speed:</b> 1 to 1.5 Hours (Only in Lahore)</span>
+    </div>
+
+    <div class="agency-credit">
+      Designed & Developed with ❤️ by <span>DevCraft Studio</span>
+    </div>
+  </footer>
+
+  <script>
+    // Product Database with exact flyer prices
+    const products = [
+      {
+        id: 1,
+        title: "Family Deal",
+        category: "deals",
+        price: 3599,
+        oldPrice: 4890,
+        badge: "BEST DEAL",
+        desc: "1 Large Pizza, 3 Zinger Burgers, 1 Sandwich, 1 Shawarma, 3 Hot Wings & 2x1.5L Drinks.",
+        img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 2,
+        title: "Super Saver Deal",
+        category: "deals",
+        price: 1450,
+        oldPrice: 1670,
+        badge: "POPULAR",
+        desc: "1 Large Pizza + 1 Liter Drink.",
+        img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 3,
+        title: "Mini Treat Deal",
+        category: "deals",
+        price: 1050,
+        oldPrice: 1220,
+        badge: "SAVER",
+        desc: "1 Medium Pizza + Half Liter Drink.",
+        img: "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 4,
+        title: "Medium Deal",
+        category: "deals",
+        price: 1400,
+        oldPrice: 1600,
+        badge: "HOT",
+        desc: "1 Medium Pizza + 1 Zinger Burger + 1 Liter Drink.",
+        img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 5,
+        title: "Small Deal",
+        category: "deals",
+        price: 1000,
+        oldPrice: 1200,
+        badge: "SOLO",
+        desc: "1 Small Pizza + 1 Zinger Burger + Regular Drink.",
+        img: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 6,
+        title: "Special Deal",
+        category: "deals",
+        price: 1600,
+        oldPrice: 1850,
+        badge: "SPECIAL",
+        desc: "1 Medium Pizza + 1 Zinger Burger + Regular Fries + Half Liter Drink.",
+        img: "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 7,
+        title: "Big Deal",
+        category: "deals",
+        price: 2200,
+        oldPrice: 2500,
+        badge: "BIG",
+        desc: "1 Large Pizza + 2 Zinger Burgers + 1.5L Drink.",
+        img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 8,
+        title: "Dosto Wali Deal",
+        category: "deals",
+        price: 1799,
+        oldPrice: 2100,
+        badge: "FRIENDS",
+        desc: "3 Zinger Burgers + 8 Crispy Hot Wings + Regular Fries + 1.5L Drink.",
+        img: "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 9,
+        title: "Uzbek Malai Cake",
+        category: "cake",
+        price: 380,
+        oldPrice: 450,
+        badge: "SIGNATURE",
+        desc: "Uzbek special fresh creamy Malai Cake cup dessert.",
+        img: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 10,
+        title: "Crispy Zinger Burger",
+        category: "burgers",
+        price: 320,
+        oldPrice: 380,
+        badge: "CLASSIC",
+        desc: "Crispy fried chicken zinger fillet with mayo and lettuce.",
+        img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 11,
+        title: "Chicken Shawarma",
+        category: "shawarma",
+        price: 180,
+        oldPrice: 220,
+        badge: "TASTY",
+        desc: "Spiced juicy chicken wrapped with garlic mayo sauce.",
+        img: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 12,
+        title: "Hot Mughal Coffee",
+        category: "coffee",
+        price: 250,
+        oldPrice: 300,
+        badge: "HOT",
+        desc: "Fresh brewed aromatic hot coffee.",
+        img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=500&q=80"
+      }
+    ];
+
+    let cart = [];
+
+    // Render Grid Cards
+    function renderProducts(cat = 'all') {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = '';
+
+      const filtered = cat === 'all' ? products : products.filter(p => p.category === cat);
+
+      filtered.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          ${p.badge ? `<span class="card-badge">${p.badge}</span>` : ''}
+          <div class="img-container" onclick="openModal(${p.id})">
+            <img src="${p.img}" alt="${p.title}">
+          </div>
+          <div class="card-body">
+            <div class="card-title" onclick="openModal(${p.id})">${p.title}</div>
+            <div class="card-desc">${p.desc}</div>
+            <div class="card-footer">
+              <div class="price-box">
+                ${p.oldPrice ? `<span class="old-price">Rs. ${p.oldPrice}</span>` : ''}
+                <span class="new-price">Rs. ${p.price}</span>
+              </div>
+              <button class="add-btn" onclick="addToCart(${p.id})">+ Add</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Category Switcher
+    function filterCat(cat, btn) {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts(cat);
+    }
+
+    // Modal
+    function openModal(id) {
+      const p = products.find(x => x.id === id);
+      document.getElementById('mImg').src = p.img;
+      document.getElementById('mTitle').innerText = p.title;
+      document.getElementById('mDesc').innerText = p.desc;
+      document.getElementById('mPrice').innerText = 'Rs. ' + p.price;
+      document.getElementById('mAddBtn').onclick = function() {
+        addToCart(p.id);
+        closeModalForce();
+      };
+      document.getElementById('modalOverlay').style.display = 'flex';
+    }
+
+    function closeModal(e) {
+      if (e.target.id === 'modalOverlay') closeModalForce();
+    }
+    function closeModalForce() {
+      document.getElementById('modalOverlay').style.display = 'none';
+    }
+
+    // Cart System
+    function addToCart(id) {
+      const item = products.find(p => p.id === id);
+      const existing = cart.find(x => x.id === id);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...item, qty: 1 });
+      }
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const cartCount = document.getElementById('cartCount');
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+
+      let totalQty = 0;
+      let totalPrice = 0;
+
+      cartItems.innerHTML = '';
+
+      if(cart.length === 0) {
+        cartItems.innerHTML = '<div style="text-align:center; padding:30px; color:#888; font-size:12px;">Your cart is empty</div>';
+      } else {
+        cart.forEach(item => {
+          totalQty += item.qty;
+          totalPrice += (item.price * item.qty);
+
+          const row = document.createElement('div');
+          row.className = 'cart-item';
+          row.innerHTML = `
+            <div>
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-price">Rs. ${item.price} x ${item.qty}</div>
+            </div>
+            <div class="qty-ctrl">
+              <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+              <span style="font-size:12px; font-weight:700;">${item.qty}</span>
+              <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+            </div>
+          `;
+          cartItems.appendChild(row);
+        });
+      }
+
+      cartCount.innerText = totalQty;
+      cartTotal.innerText = 'Rs. ' + totalPrice;
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(x => x.id === id);
+      if (item) {
+        item.qty += delta;
+        if (item.qty <= 0) {
+          cart = cart.filter(x => x.id !== id);
+        }
+      }
+      updateCartUI();
+    }
+
+    function toggleCart() {
+      document.getElementById('cartDrawer').classList.toggle('open');
+    }
+
+    function sendWhatsAppOrder() {
+      if(cart.length === 0) {
+        alert('Please add items to cart first!');
+        return;
+      }
+      let msg = "Hello UMB Burger! I want to place an order:\n\n";
+      let total = 0;
+      cart.forEach(i => {
+        msg += `• ${i.title} (x${i.qty}) - Rs. ${i.price * i.qty}\n`;
+        total += i.price * i.qty;
+      });
+      msg += `\n*Total Amount:* Rs. ${total}`;
+      msg += `\n*Delivery Location:* Lahore`;
+      
+      const url = `https://wa.me/923033944436?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+
+    // Auto Banner Slider
+    let currentSlide = 0;
+    const track = document.getElementById('sliderTrack');
+    const dots = document.querySelectorAll('.dot');
+
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % 3;
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+      dots.forEach((d, idx) => {
+        d.classList.toggle('active', idx === currentSlide);
+      });
+    }, 4000);
+
+    // Initial Init
+    renderProducts('all');
+  </script>
+</body>
+</html>
